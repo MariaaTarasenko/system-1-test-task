@@ -1,0 +1,34 @@
+@startuml
+class Partner {
+    +name: String
+    +availableFunctions: List<Functionality>
+}
+
+class User {
+    +username: String
+    +status: UserType
+    +sessionTime: int
+    +operationsToday: int
+    +operationsWeek: int
+}
+
+enum UserType {
+    GUEST
+    BASIC
+    COMPANY
+    ADVANCED
+}
+
+class Functionality {
+    +name: String
+    +permissions: List<Permission>
+}
+
+class Permission {
+    +name: String
+}
+
+User "1" -- "1..*" Partner : accesses >
+User "1" -- "1..*" Functionality : has >
+Functionality "1" -- "1..*" Permission : grants >
+@enduml

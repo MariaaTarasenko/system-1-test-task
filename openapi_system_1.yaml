@@ -1,0 +1,101 @@
+openapi: 3.0.0
+info:
+  title: System_1 API
+  version: 1.0.0
+  description: API for retrieving information about users and partners.
+
+servers:
+  - url: http://api.system_1.com
+
+paths:
+  /api/external/user:
+    get:
+      summary: Retrieve user information
+      description: Returns information about the user based on the provided user_id.
+      parameters:
+        - name: user_id
+          in: query
+          required: false
+          description: Unique user identifier.
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          description: Pagination start timestamp.
+          schema:
+            type: integer
+        - name: to
+          in: query
+          required: false
+          description: Pagination end timestamp.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          description: Limit the number of results returned.
+          schema:
+            type: integer
+        - name: provider_id
+          in: query
+          required: false
+          description: Unique identifier of the partner a user bound to.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with user information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  provider_id:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                  zone:
+                    type: string
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+
+  /api/partner:
+    get:
+      summary: Retrieve partner information
+      description: Returns information about the partner based on the provider_id and status.
+      parameters:
+        - name: provider_id
+          in: query
+          required: false
+          description: Unique partner identifier.
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: Partner operation state.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with partner information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  provider_id:
+                    type: string
+                  status:
+                    type: string
+        '400':
+          description: Bad request
+        '404':
+          description: Partner not found
